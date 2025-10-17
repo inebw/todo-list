@@ -2,6 +2,7 @@ import { Task } from "./tasks";
 
 export const Proj = class {
     constructor(name) {
+        this.uuid = crypto.randomUUID();
         this.name = name;
         this.tasks = {};
         this.date = new Date();

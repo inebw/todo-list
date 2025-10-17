@@ -144,10 +144,11 @@
     display: grid;
     gap: 25px;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-auto-rows: 250px;
 }
 
-.add-button > svg, 
-.add-button > img {
+.add-button>svg,
+.add-button>img {
     height: 2rem;
 }
 
