@@ -1,8 +1,9 @@
 export const taskMan = (function () {
+    const storage = window.localStorage;
     
-    function displayTasks(project) {
+    function displayTask(task) {
         document.querySelector('.projects').remove();
     }
 
-    return { displayTasks }
+    return { displayTask }
 })();

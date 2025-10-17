@@ -7,10 +7,10 @@ import { taskMan } from "./task-dom";
 const stor = window.localStorage;
 
 stor.clear();
-const all_projs = [];
+const all_projs = {};
 
 const default_proj = new Proj('General');
-all_projs.push(default_proj)
+all_projs[crypto.randomUUID()] = default_proj;
 
 const task1 = new Task('Task to do title number 1', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const task2 = new Task('Task to do title number 2', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
@@ -31,7 +31,7 @@ default_proj.add_task(task7);
 default_proj.add_task(task8);
 
 const odin_proj = new Proj('Odin Course Tutorial');
-all_projs.push(odin_proj);
+all_projs[crypto.randomUUID()] = odin_proj;
 
 const otask1 = new Task('Task to do title number 1', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const otask2 = new Task('Task to do title number 2', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
@@ -45,7 +45,7 @@ odin_proj.add_task(otask4);
 odin_proj.add_task(otask5);
 
 const cookProj = new Proj('Learing cooking and baking');
-all_projs.push(cookProj);
+all_projs[crypto.randomUUID()] = cookProj;
 
 const ctask1 = new Task('Task to do title number 1', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const ctask2 = new Task('Task to do title number 2', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
@@ -59,7 +59,7 @@ cookProj.add_task(ctask4);
 cookProj.add_task(ctask5);
 
 const jsProj = new Proj('JavaScript Project: Restaurant Page');
-all_projs.push(jsProj);
+all_projs[crypto.randomUUID()] = jsProj;
 
 const jtask1 = new Task('Task to do title number 2', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const jtask2 = new Task('Task to do title number 1', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
@@ -73,6 +73,8 @@ jsProj.add_task(jtask4);
 jsProj.add_task(jtask5);
 
 stor.setItem('all_projs', JSON.stringify(all_projs))
+const allProj = JSON.parse(stor.all_projs);
+console.log(allProj)
 
 const container = document.querySelector('.container');
 const projContainer = manipulator.homePage();

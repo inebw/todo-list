@@ -16,16 +16,16 @@ export const manipulator = (function () {
         projects.classList.add('projects');
 
 
-        for (const item of allProj) {
+        for (const parentKey of Object.keys(allProj)) {
             const projCard = document.createElement('div');
             projCard.classList.add('proj-card')
-            projCard.id = item.uuid;
+            projCard.id = parentKey;
 
             const projHeader = document.createElement('div');
             projHeader.classList.add('proj-header');
 
             const projName = document.createElement('h2');
-            projName.textContent = item.name;
+            projName.textContent = allProj[parentKey].name;
             projName.classList.add('proj-name');
 
             const addTask = document.createElement('div');
@@ -45,7 +45,7 @@ export const manipulator = (function () {
             allTasks.classList.add('tasks');
 
             let i = 0;
-            for (const key of Object.keys(item.tasks)) {
+            for (const key of Object.keys(allProj[parentKey].tasks)) {
                 if (i == 5) break;
                 i++;
                 const task = document.createElement('div');
@@ -56,7 +56,7 @@ export const manipulator = (function () {
                 checkbox.classList.add('checkbox');
 
                 const taskTitle = document.createElement('div');
-                taskTitle.textContent = item.tasks[key].title;
+                taskTitle.textContent = allProj[parentKey].tasks[key].title;
 
                 allTasks.appendChild(task);
 
@@ -99,13 +99,8 @@ export const manipulator = (function () {
 
     function deleteProject(uuid) {
         const allProj = JSON.parse(storage.all_projs);
-
         const projCard = document.getElementById(uuid);
-        let cardIndex = 0;
-        for (let i = 0; i < allProj.length; i++) {
-            if (uuid === allProj[i].uuid) cardIndex = i
-        }
-        allProj.splice(cardIndex, 1);
+        delete allProj[uuid];
         projCard.remove();
         storage.clear();
         storage.setItem('all_projs', JSON.stringify(allProj));
