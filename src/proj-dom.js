@@ -1,5 +1,6 @@
 import plusButton from "./icons/plus.svg";
 import saveButtonSVG from "./icons/save.svg";
+import deleteButtonSVG from "./icons/delete.svg";
 import { taskMan } from "./task-dom";
 import { Proj } from "./projects";
 
@@ -15,7 +16,9 @@ export const manipulator = (function () {
         viewTaskEventAdder();
         newTaskEventAdder();
         newProjectAdder();
+        projectViewEventAdder();
     }
+
 
     function removeBackButton () {
         const backButton = document.querySelectorAll('.back-button');
@@ -27,7 +30,7 @@ export const manipulator = (function () {
     }
 
     function viewTaskEventAdder() {
-        const tasks = document.querySelectorAll('.task');
+        const tasks = document.querySelectorAll('.task-title');
         
         tasks.forEach((element) => {
             element.addEventListener('click', (e) => {
@@ -58,6 +61,7 @@ export const manipulator = (function () {
         container.classList.add('project-name-form')
         const label = document.createElement('label')
         const input = document.createElement('input');
+        input.setAttributeNode(document.createAttribute('required'));
         const submitButton = document.createElement('button');
         const saveButtonImg = document.createElement('img');
         saveButtonImg.classList.add('save-button-img');
@@ -115,57 +119,7 @@ export const manipulator = (function () {
 
 
         for (const parentKey of Object.keys(allProj)) {
-            const projCard = document.createElement('div');
-            projCard.classList.add('proj-card')
-            projCard.id = parentKey;
-
-            const projHeader = document.createElement('div');
-            projHeader.classList.add('proj-header');
-
-            const projName = document.createElement('h2');
-            projName.textContent = allProj[parentKey].name;
-            projName.classList.add('proj-name');
-
-            const addTask = document.createElement('div');
-            addTask.classList.add('add-task');
-            const addButton = document.createElement('button');
-            addButton.classList.add('add-button');
-            const addButtonSVG = document.createElement('img');
-            addButtonSVG.src = plusButton;
-
-            addTask.appendChild(addButton);
-            addButton.appendChild(addButtonSVG);
-
-            projHeader.appendChild(projName);
-            projHeader.appendChild(addTask);
-
-            const allTasks = document.createElement('div');
-            allTasks.classList.add('tasks');
-
-            let i = 0;
-            for (const key of Object.keys(allProj[parentKey].tasks)) {
-                if (i == 5) break;
-                i++;
-                const task = document.createElement('div');
-                task.classList.add('task');
-                task.id = key;
-
-                const checkbox = document.createElement('div');
-                checkbox.classList.add('checkbox');
-
-                const taskTitle = document.createElement('div');
-                taskTitle.textContent = allProj[parentKey].tasks[key].title;
-
-                allTasks.appendChild(task);
-
-                task.appendChild(checkbox);
-                task.appendChild(taskTitle);
-            }
-
-            projCard.appendChild(projHeader);
-            projCard.appendChild(allTasks);
-
-            projects.appendChild(projCard);
+            projects.appendChild(createCard(parentKey));
         }
         addProject(projects);
         return projects;
@@ -203,6 +157,120 @@ export const manipulator = (function () {
         storage.clear();
         storage.setItem('all_projs', JSON.stringify(allProj));
         homePage();
+    }
+
+    function createCard(parentKey, isSingle=false) {
+        const allProj = JSON.parse(storage.all_projs);
+        const projCard = document.createElement('div');
+        projCard.classList.add('proj-card');
+        projCard.id = parentKey;
+
+        const projHeader = document.createElement('div');
+        projHeader.classList.add('proj-header');
+
+        const projName = document.createElement('h2');
+        projName.textContent = allProj[parentKey].name;
+        projName.classList.add('proj-name');
+
+        const addTask = document.createElement('div');
+        addTask.classList.add('add-task');
+        const addButton = document.createElement('button');
+        addButton.classList.add('add-button');
+        const addButtonSVG = document.createElement('img');
+        addButtonSVG.src = plusButton;
+
+        addTask.appendChild(addButton);
+        addButton.appendChild(addButtonSVG);
+
+        projHeader.appendChild(projName);
+        projHeader.appendChild(addTask);
+
+        const allTasks = document.createElement('div');
+        allTasks.classList.add('tasks');
+
+        let i = isSingle ? -5000 : 0;
+        for (const key of Object.keys(allProj[parentKey].tasks)) {
+            if (i == 5) break;
+            i++;
+            const task = document.createElement('div');
+            task.classList.add('task');
+            task.id = key;
+
+            const checkbox = document.createElement('div');
+            checkbox.classList.add('checkbox');
+
+            const taskTitle = document.createElement('div');
+            taskTitle.textContent = allProj[parentKey].tasks[key].title;
+            taskTitle.classList.add('task-title');
+
+            allTasks.appendChild(task);
+
+            task.appendChild(checkbox);
+            task.appendChild(taskTitle);
+
+            if (isSingle) {
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-task-button');
+
+                const deleteButtonImg = document.createElement('img');
+                deleteButtonImg.classList.add('delete-task-button-img');
+                deleteButtonImg.src = deleteButtonSVG;
+
+                deleteButton.appendChild(deleteButtonImg);
+                task.appendChild(deleteButton);
+            }
+
+        }
+
+        projCard.appendChild(projHeader);
+        projCard.appendChild(allTasks);
+
+        return projCard;
+    }
+
+    function viewProject(parentId) {
+        const container = document.querySelector('.container');
+        if (container.firstChild) container.firstChild.remove();
+        const projects = document.createElement('div');
+        projects.classList.add('projects')
+        
+        const projCard = createCard(parentId, true);
+        projects.appendChild(projCard);
+
+        container.appendChild(projects);
+        taskMan.addBackButton();
+        viewTaskEventAdder();
+        deleteTaskEventAdder();
+
+    }
+
+    function deleteTaskEventAdder() {
+        const deleteButton = document.querySelectorAll('.delete-task-button');
+        deleteButton.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                const myId = e.target.parentElement.parentElement.id;
+                const parentId = e.target.parentElement.parentElement.parentElement.parentElement.id;
+                deleteTask(myId, parentId);
+                e.target.parentElement.parentElement.remove();
+            })
+        })
+
+    }
+
+    function deleteTask(myId, parentId) {
+        const allProj = JSON.parse(storage.all_projs);
+        delete allProj[parentId].tasks[myId];
+        storage.setItem('all_projs', JSON.stringify(allProj));
+
+    }
+
+    function projectViewEventAdder() {
+        const projCard = document.querySelectorAll('.proj-name');
+        projCard.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                viewProject(e.target.parentElement.parentElement.id)
+            } )
+        })
     }
 
     return { homePage, deleteProject }

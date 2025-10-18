@@ -151,15 +151,29 @@
     display: grid;
     gap: 25px;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    grid-auto-rows: 250px;
 }
 
+.delete-task-button-img,
 .save-button-img,
 .header > button > img,
 .add-button>svg,
 .add-project-button>img,
 .add-button>img {
     height: 2rem;
+}
+
+.delete-task-button {
+    margin-left: auto;
+}
+
+.save-button-img:hover,
+.header > button > img:hover,
+.add-button>svg:hover,
+.add-project-button>img:hover,
+.add-button>img:hover,
+.delete-task-button:hover {
+    transition: transform 0.3s;
+    transform: translateY(-1px);
 }
 
 .proj-card > form {
@@ -293,9 +307,12 @@ input {
     width: 50%;
 }
 
+.proj-name:hover,
 .task:hover,
 button:hover {
     cursor: pointer;
+    border-radius: 8px;
+    background-color: #d8d8d8;
 }
 
 select,

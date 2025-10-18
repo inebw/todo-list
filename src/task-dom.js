@@ -8,7 +8,6 @@ export const taskMan = (function () {
     const storage = window.localStorage;
 
     function newTask(projectId, parentId, myId) {
-        console.log(projectId, parentId, myId);
         const allProj = JSON.parse(storage.all_projs);
         const mainContainer = document.querySelector('.container');
         if (mainContainer.firstChild) mainContainer.firstChild.remove()
@@ -85,7 +84,6 @@ export const taskMan = (function () {
         
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const task = allProj[parentId].tasks[myId];
             const titleValue = taskName.value;
             const descValue = desc.value;
             const isDone = isFinished.checked;
@@ -94,6 +92,7 @@ export const taskMan = (function () {
             const projectId = document.getElementById('project').value;
             const priorityValue = document.getElementById('priority').value;
             if (parentId) {
+                const task = allProj[parentId].tasks[myId];
                 task.isFinished = isDone;
                 task.notes = notesValue;
                 task.priority = priorityValue;
@@ -109,7 +108,7 @@ export const taskMan = (function () {
 
             } else {
                 const newTask = new Task(titleValue, descValue, dueDateValue, priorityValue, notesValue, isDone);
-                allProj[projectId.value].tasks[crypto.randomUUID()] = newTask;
+                allProj[projectId].tasks[crypto.randomUUID()] = newTask;
             }
             storage.setItem('all_projs', JSON.stringify(allProj));
             manipulator.homePage();
@@ -195,5 +194,5 @@ export const taskMan = (function () {
         })
     }
 
-    return { displayTask, newTask}
+    return { displayTask, newTask, addBackButton}
 })();
