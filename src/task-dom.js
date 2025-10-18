@@ -5,13 +5,11 @@ import { manipulator } from "./proj-dom";
 export const taskMan = (function () {
     const storage = window.localStorage;
 
-    function displayTask(parentId, myId) {
-
-        const mainContainer = document.querySelector('.container');
-        const projects = document.querySelector('.projects');
-        if (projects) projects.remove();
+    function newTask(projectId, parentId, myId) {
+        console.log(projectId, parentId, myId);
         const allProj = JSON.parse(storage.all_projs);
-        const task = allProj[parentId].tasks[myId];
+        const mainContainer = document.querySelector('.container');
+        if (mainContainer.firstChild) mainContainer.firstChild.remove()
 
         const container = document.createElement('div');
         container.classList.add('view-task');
@@ -20,9 +18,9 @@ export const taskMan = (function () {
         viewTaskHeader.classList.add('view-task-header');
         container.appendChild(viewTaskHeader);
 
-
-        const projectName = projectSelector(allProj[parentId].name);
-        viewTaskHeader.appendChild(projectName);
+        const projectName = projectId ? allProj[projectId].name : parentId ? allProj[parentId].name: undefined;
+        const projectContainer = projectSelector(projectName);
+        viewTaskHeader.appendChild(projectContainer);
 
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('view-task-container');
@@ -31,11 +29,10 @@ export const taskMan = (function () {
         const isFinished = document.createElement('input');
         isFinished.classList.add('view-task-isFinished');
         isFinished.type = 'checkbox';
-        isFinished.checked = task.isFinished;
+        isFinished.checked = false;
         taskContainer.appendChild(isFinished);
 
         const taskName = document.createElement('input');
-        taskName.value = task.title;
         taskName.placeholder = "title"
         taskContainer.appendChild(taskName);
         taskName.classList.add('view-task-title');
@@ -47,28 +44,42 @@ export const taskMan = (function () {
 
         const desc = document.createElement('textarea');
         desc.classList.add('view-task-desc');
-        desc.value = task.desc;
+        desc.placeholder = 'add more info';
         taskContainer.appendChild(desc);
 
-        const priorityContainer = prioritySelector(task.priority);
+        let priorityContainer = prioritySelector();
         priorityContainer.classList.add('view-task-priority');
         taskContainer.appendChild(priorityContainer);
 
         const notes = document.createElement('textarea');
         notes.classList.add('view-task-notes');
         notes.placeholder = 'notes';
-        notes.value = task.notes;
         taskContainer.appendChild(notes);
 
         const dueDate = document.createElement('input');
         dueDate.type = 'date';
         dueDate.classList.add('view-task-dueDate');
-        dueDate.value = task.dueDate;
         taskContainer.appendChild(dueDate);
+
+        if (parentId) {
+            const task = allProj[parentId].tasks[myId];
+            isFinished.checked = task.isFinished;
+            taskName.value = task.title;
+            desc.value = task.desc;
+            priorityContainer = prioritySelector(task.priority);
+            notes.value = task.notes;
+            dueDate.value = task.dueDate;
+        }
 
         mainContainer.appendChild(container);
         addBackButton();
         
+
+    }
+
+    function displayTask(parentId, myId) {
+        console.log(parentId, myId);
+        newTask(undefined, parentId, myId);
     }
 
     function projectSelector(currentProject) {
@@ -144,5 +155,5 @@ export const taskMan = (function () {
         })
     }
 
-    return { displayTask }
+    return { displayTask, newTask}
 })();

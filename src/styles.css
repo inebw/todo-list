@@ -135,6 +135,7 @@
     justify-self: start;
 }
 
+.add-project>.add-project-button,
 .add-task>.add-button {
     display: flex;
     gap: 5px;
@@ -155,6 +156,7 @@
 
 .header > button > img,
 .add-button>svg,
+.add-project-button>img,
 .add-button>img {
     height: 2rem;
 }
@@ -286,6 +288,10 @@ input {
     width: 50%;
 }
 
+.task:hover,
+button:hover {
+    cursor: pointer;
+}
 
 select,
 ::picker(select) {

@@ -1,18 +1,28 @@
 import plusButton from "./icons/plus.svg";
 import { taskMan } from "./task-dom";
+import { Proj } from "./projects";
 
 export const manipulator = (function () {
     const storage = window.localStorage;
 
     function homePage() {
         const container = document.querySelector('.container');
-        const viewTask = document.querySelector('.view-task');
-        const backButton = document.querySelector('.back-button');
-        if (backButton) backButton.remove();
-        if (viewTask) viewTask.remove();
+        removeBackButton();
+        if (container.firstChild) container.firstChild.remove();
         const subContainer = storage.all_projs ? buildWith() : addProject();
         container.appendChild(subContainer);
         viewTaskEventAdder();
+        newTaskEventAdder();
+        newProjectAdder();
+    }
+
+    function removeBackButton () {
+        const backButton = document.querySelectorAll('.back-button');
+        if (backButton) {
+            backButton.forEach((element) => {
+                element.remove();
+            })
+        }
     }
 
     function viewTaskEventAdder() {
@@ -25,6 +35,28 @@ export const manipulator = (function () {
                 taskMan.displayTask(parentId, myId);
             })
         })
+    }
+
+    function newProjectAdder() {
+        const allProj = JSON.parse(storage.all_projs);
+        const addNewProject = document.querySelector('.add-project-button');
+        addNewProject.addEventListener('click', () => {
+            const projectName = prompt("Enter New Project Name");
+            allProj[crypto.randomUUID()] = new Proj(projectName);
+            storage.setItem('all_projs', JSON.stringify(allProj));
+            homePage();
+        })
+    }
+
+    function newTaskEventAdder() {
+        const addNewTask = document.querySelectorAll('.add-button');
+        addNewTask.forEach((element) => {
+            element.addEventListener('click', (e) => {
+            const projectId = e.target.parentElement.parentElement.parentElement.parentElement.id;
+            taskMan.newTask(projectId);
+            })
+        })
+
     }
 
     function removeProjectEventAdder() {
@@ -105,9 +137,9 @@ export const manipulator = (function () {
 
     function addProject(projects) {
         const addTask = document.createElement('div');
-        addTask.classList.add('add-task');
+        addTask.classList.add('add-project');
         const addButton = document.createElement('button');
-        addButton.classList.add('add-button');
+        addButton.classList.add('add-project-button');
         addButton.textContent = 'new project';
         const addButtonSVG = document.createElement('img');
         addButtonSVG.src = plusButton;
