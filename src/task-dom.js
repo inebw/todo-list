@@ -1,4 +1,4 @@
-import { sub } from "date-fns";
+import { add, sub } from "date-fns";
 import backSVG from "./icons/back.svg";
 import { manipulator } from "./proj-dom";
 
@@ -12,14 +12,6 @@ export const taskMan = (function () {
         if (projects) projects.remove();
         const allProj = JSON.parse(storage.all_projs);
         const task = allProj[parentId].tasks[myId];
-
-        const header = document.querySelector('.header');
-        const backButton = document.createElement('button');
-        backButton.classList.add('back-button')
-        const backButtonImg = document.createElement('img');
-        backButtonImg.src = backSVG;
-        backButton.appendChild(backButtonImg);
-        header.appendChild(backButton);
 
         const container = document.createElement('div');
         container.classList.add('view-task');
@@ -101,7 +93,7 @@ export const taskMan = (function () {
         taskContainer.appendChild(dueDate);
 
         mainContainer.appendChild(container);
-        backButtonEventAdder(backButton);
+        addBackButton();
         
     }
 
@@ -132,6 +124,17 @@ export const taskMan = (function () {
         }
 
         return projectContainer;
+    }
+
+    function addBackButton() {
+        const header = document.querySelector('.header');
+        const backButton = document.createElement('button');
+        backButton.classList.add('back-button')
+        const backButtonImg = document.createElement('img');
+        backButtonImg.src = backSVG;
+        backButton.appendChild(backButtonImg);
+        header.appendChild(backButton);
+        backButtonEventAdder(backButton);
     }
 
     function backButtonEventAdder(backButton) {
