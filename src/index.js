@@ -12,7 +12,7 @@ const all_projs = {};
 const default_proj = new Proj('General');
 all_projs[crypto.randomUUID()] = default_proj;
 
-const task1 = new Task('Task to do title number 1', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
+const task1 = new Task('This is the first task that you are crating', 'Here you can write the description of your text', '2026-07-22', 'high', 'no notes');
 const task2 = new Task('Task to do title number 2', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const task3 = new Task('Task to do title number 3', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
 const task4 = new Task('Task to do title number 4', 'Here you can write the description of your text', '25-12-2025', 'high', 'no notes');
@@ -73,21 +73,4 @@ jsProj.add_task(jtask4);
 jsProj.add_task(jtask5);
 
 stor.setItem('all_projs', JSON.stringify(all_projs))
-const allProj = JSON.parse(stor.all_projs);
-console.log(allProj)
-
-const container = document.querySelector('.container');
-const projContainer = manipulator.homePage();
-
-container.appendChild(projContainer);
-
-
-const addTaskButton = document.querySelectorAll('.add-button');
-
-addTaskButton.forEach((element) => {
-    element.addEventListener('click', (e) => {
-        const uuid = e.target.parentElement.parentElement.parentElement.parentElement.id;
-        manipulator.deleteProject(uuid);
-    })
-})
-
+manipulator.homePage();

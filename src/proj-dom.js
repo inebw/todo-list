@@ -1,11 +1,40 @@
 import plusButton from "./icons/plus.svg";
+import { taskMan } from "./task-dom";
 
 export const manipulator = (function () {
     const storage = window.localStorage;
 
     function homePage() {
-        if (storage.all_projs) return buildWith();
-        return addProject();
+        const container = document.querySelector('.container');
+        const viewTask = document.querySelector('.view-task');
+        const backButton = document.querySelector('.back-button');
+        if (backButton) backButton.remove();
+        if (viewTask) viewTask.remove();
+        const subContainer = storage.all_projs ? buildWith() : addProject();
+        container.appendChild(subContainer);
+        viewTaskEventAdder();
+    }
+
+    function viewTaskEventAdder() {
+        const tasks = document.querySelectorAll('.task');
+        
+        tasks.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                const myId = e.target.parentElement.id;
+                const parentId = e.target.parentElement.parentElement.parentElement.id;
+                taskMan.displayTask(parentId, myId);
+            })
+        })
+    }
+
+    function removeProjectEventAdder() {
+        const addTaskButton = document.querySelectorAll('.add-button');
+        addTaskButton.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                const uuid = e.target.parentElement.parentElement.parentElement.parentElement.id;
+                manipulator.deleteProject(uuid);
+            })
+        })
     }
 
     function buildWith() {

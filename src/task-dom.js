@@ -1,8 +1,143 @@
+import { sub } from "date-fns";
+import backSVG from "./icons/back.svg";
+import { manipulator } from "./proj-dom";
+
 export const taskMan = (function () {
     const storage = window.localStorage;
+
+    function displayTask(parentId, myId) {
+
+        const mainContainer = document.querySelector('.container');
+        const projects = document.querySelector('.projects');
+        if (projects) projects.remove();
+        const allProj = JSON.parse(storage.all_projs);
+        const task = allProj[parentId].tasks[myId];
+
+        const header = document.querySelector('.header');
+        const backButton = document.createElement('button');
+        backButton.classList.add('back-button')
+        const backButtonImg = document.createElement('img');
+        backButtonImg.src = backSVG;
+        backButton.appendChild(backButtonImg);
+        header.appendChild(backButton);
+
+        const container = document.createElement('div');
+        container.classList.add('view-task');
+
+        const viewTaskHeader = document.createElement('div');
+        viewTaskHeader.classList.add('view-task-header');
+        container.appendChild(viewTaskHeader);
+
     
-    function displayTask(task) {
-        document.querySelector('.projects').remove();
+        const projectName = projectSelector(allProj[parentId].name);
+        viewTaskHeader.appendChild(projectName);
+
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('view-task-container');
+        container.appendChild(taskContainer);
+
+        const isFinished = document.createElement('input');
+        isFinished.classList.add('view-task-isFinished');
+        isFinished.type = 'checkbox';
+        isFinished.checked = task.isFinished;
+        taskContainer.appendChild(isFinished);
+
+        const taskName = document.createElement('input');
+        taskName.value = task.title;
+        taskName.placeholder = "title"
+        taskContainer.appendChild(taskName);
+        taskName.classList.add('view-task-title');
+
+        const submitButton = document.createElement('button');
+        submitButton.classList.add('view-task-submit');
+        submitButton.textContent = 'save';
+        viewTaskHeader.appendChild(submitButton);
+
+        const desc = document.createElement('textarea');
+        desc.classList.add('view-task-desc');
+        desc.value = task.desc;
+        taskContainer.appendChild(desc);
+
+        const priorityContainer = document.createElement('div');
+        priorityContainer.classList.add('view-task-priority');
+        taskContainer.appendChild(priorityContainer);
+
+        const priorityLabel = document.createElement('label');
+        priorityLabel.htmlFor = 'priority';
+        priorityLabel.textContent = 'Priority: ';
+        priorityContainer.appendChild(priorityLabel);
+
+        const prioritySelect = document.createElement('select');
+        prioritySelect.id = 'priority';
+        prioritySelect.name = 'priority';
+        prioritySelect.textContent = task.priority;
+        priorityContainer.appendChild(prioritySelect);
+
+        const highPriority = document.createElement('option');
+        highPriority.value = 'high';
+        highPriority.textContent = 'high';
+        prioritySelect.appendChild(highPriority);
+
+        const mediumPriority = document.createElement('option');
+        mediumPriority.value = 'medium';
+        mediumPriority.textContent = 'medium';
+        prioritySelect.appendChild(mediumPriority);
+
+        const lowPriority = document.createElement('option');
+        lowPriority.value = 'low';
+        lowPriority.textContent = 'low';
+        prioritySelect.appendChild(lowPriority);
+
+        const notes = document.createElement('textarea');
+        notes.classList.add('view-task-notes');
+        notes.placeholder = 'notes';
+        notes.value = task.notes;
+        taskContainer.appendChild(notes);
+
+        const dueDate = document.createElement('input');
+        dueDate.type = 'date';
+        dueDate.classList.add('view-task-dueDate');
+        dueDate.value = task.dueDate;
+        taskContainer.appendChild(dueDate);
+
+        mainContainer.appendChild(container);
+        backButtonEventAdder(backButton);
+        
+    }
+
+    function projectSelector(currentProject=false) {
+        const allProj = JSON.parse(storage.all_projs);
+
+        const projectContainer = document.createElement('div');
+        projectContainer.classList.add('view-task-project-name');
+        projectContainer.id = 'project-name'
+
+        const projectLabel = document.createElement('label');
+        projectLabel.htmlFor = 'project';
+        projectContainer.appendChild(projectLabel);
+
+        const projectSelect = document.createElement('select');
+        projectSelect.id = 'project';
+        projectSelect.name = 'project';
+        projectContainer.appendChild(projectSelect);
+
+        for (const key of Object.keys(allProj)) {
+            const option = document.createElement('option');
+            option.value = allProj[key].name;
+            option.textContent = allProj[key].name;
+            projectSelect.appendChild(option);
+            if (currentProject == allProj[key].name) {
+                option.setAttributeNode(document.createAttribute('selected'));
+            }
+        }
+
+        return projectContainer;
+    }
+
+    function backButtonEventAdder(backButton) {
+        backButton.addEventListener('click', () => {
+            manipulator.homePage();
+        })
     }
 
     return { displayTask }
