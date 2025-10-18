@@ -20,7 +20,7 @@ export const taskMan = (function () {
         viewTaskHeader.classList.add('view-task-header');
         container.appendChild(viewTaskHeader);
 
-    
+
         const projectName = projectSelector(allProj[parentId].name);
         viewTaskHeader.appendChild(projectName);
 
@@ -50,35 +50,9 @@ export const taskMan = (function () {
         desc.value = task.desc;
         taskContainer.appendChild(desc);
 
-        const priorityContainer = document.createElement('div');
+        const priorityContainer = prioritySelector(task.priority);
         priorityContainer.classList.add('view-task-priority');
         taskContainer.appendChild(priorityContainer);
-
-        const priorityLabel = document.createElement('label');
-        priorityLabel.htmlFor = 'priority';
-        priorityLabel.textContent = 'Priority: ';
-        priorityContainer.appendChild(priorityLabel);
-
-        const prioritySelect = document.createElement('select');
-        prioritySelect.id = 'priority';
-        prioritySelect.name = 'priority';
-        prioritySelect.textContent = task.priority;
-        priorityContainer.appendChild(prioritySelect);
-
-        const highPriority = document.createElement('option');
-        highPriority.value = 'high';
-        highPriority.textContent = 'high';
-        prioritySelect.appendChild(highPriority);
-
-        const mediumPriority = document.createElement('option');
-        mediumPriority.value = 'medium';
-        mediumPriority.textContent = 'medium';
-        prioritySelect.appendChild(mediumPriority);
-
-        const lowPriority = document.createElement('option');
-        lowPriority.value = 'low';
-        lowPriority.textContent = 'low';
-        prioritySelect.appendChild(lowPriority);
 
         const notes = document.createElement('textarea');
         notes.classList.add('view-task-notes');
@@ -97,7 +71,7 @@ export const taskMan = (function () {
         
     }
 
-    function projectSelector(currentProject=false) {
+    function projectSelector(currentProject) {
         const allProj = JSON.parse(storage.all_projs);
 
         const projectContainer = document.createElement('div');
@@ -124,6 +98,33 @@ export const taskMan = (function () {
         }
 
         return projectContainer;
+    }
+
+    function prioritySelector(currentPriority) {
+        const priorityContainer = document.createElement('div');
+        priorityContainer.classList.add('view-task-priority');
+
+        const priorityLabel = document.createElement('label');
+        priorityLabel.htmlFor = 'priority';
+        priorityLabel.textContent = 'Priority: ';
+        priorityContainer.appendChild(priorityLabel);
+
+        const prioritySelect = document.createElement('select');
+        prioritySelect.id = 'priority';
+        prioritySelect.name = 'priority';
+        priorityContainer.appendChild(prioritySelect);
+
+        for (const op of ['select', 'low', 'medium', 'high']) {
+            const option = document.createElement('option');
+            option.value = op;
+            option.textContent = op;
+            prioritySelect.appendChild(option);
+            if (currentPriority == op) {
+                option.setAttributeNode(document.createAttribute('selected'));
+            }
+        }
+
+        return priorityContainer;
     }
 
     function addBackButton() {
