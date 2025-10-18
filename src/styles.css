@@ -154,11 +154,17 @@
     grid-auto-rows: 250px;
 }
 
+.save-button-img,
 .header > button > img,
 .add-button>svg,
 .add-project-button>img,
 .add-button>img {
     height: 2rem;
+}
+
+.proj-card > form {
+    display: flex;
+    gap: 10px;
 }
 
 .proj-header {
@@ -273,7 +279,6 @@
 }
 
 .view-task-dueDate,
-.view-task-submit,
 .view-task-priority,
 textarea,
 input {
@@ -375,5 +380,9 @@ option::checkmark {
   order: 1;
   margin-left: auto;
   content: "☑️";
+}
+
+.hidden {
+    display: none;
 }
 

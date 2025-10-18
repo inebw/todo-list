@@ -1,6 +1,8 @@
 import { add, sub } from "date-fns";
 import backSVG from "./icons/back.svg";
 import { manipulator } from "./proj-dom";
+import { Task } from "./tasks";
+import saveButtonSVG from "./icons/save.svg";
 
 export const taskMan = (function () {
     const storage = window.localStorage;
@@ -11,8 +13,11 @@ export const taskMan = (function () {
         const mainContainer = document.querySelector('.container');
         if (mainContainer.firstChild) mainContainer.firstChild.remove()
 
+        const form = document.createElement('form');
+
         const container = document.createElement('div');
         container.classList.add('view-task');
+        form.appendChild(container);
 
         const viewTaskHeader = document.createElement('div');
         viewTaskHeader.classList.add('view-task-header');
@@ -38,9 +43,13 @@ export const taskMan = (function () {
         taskName.classList.add('view-task-title');
 
         const submitButton = document.createElement('button');
+        const submitButtonImg = document.createElement('img');
+        submitButtonImg.classList.add('save-button-img');
+        submitButton.appendChild(submitButtonImg);
+        submitButtonImg.src = saveButtonSVG;
         submitButton.classList.add('view-task-submit');
-        submitButton.textContent = 'save';
         viewTaskHeader.appendChild(submitButton);
+        submitButton.type = 'submit';
 
         const desc = document.createElement('textarea');
         desc.classList.add('view-task-desc');
@@ -71,14 +80,45 @@ export const taskMan = (function () {
             dueDate.value = task.dueDate;
         }
 
-        mainContainer.appendChild(container);
+        mainContainer.appendChild(form);
         addBackButton();
         
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const task = allProj[parentId].tasks[myId];
+            const titleValue = taskName.value;
+            const descValue = desc.value;
+            const isDone = isFinished.checked;
+            const notesValue = notes.value;
+            const dueDateValue = dueDate.value;
+            const projectId = document.getElementById('project').value;
+            const priorityValue = document.getElementById('priority').value;
+            if (parentId) {
+                task.isFinished = isDone;
+                task.notes = notesValue;
+                task.priority = priorityValue;
+                task.dueDate = dueDateValue;
+                task.desc = desc.value;
+                task.title = titleValue;
+
+                if (parentId != projectId) {
+                    allProj[projectId].tasks[myId] = task;
+                    delete allProj[parentId].tasks[myId];
+                }
+                    
+
+            } else {
+                const newTask = new Task(titleValue, descValue, dueDateValue, priorityValue, notesValue, isDone);
+                allProj[projectId.value].tasks[crypto.randomUUID()] = newTask;
+            }
+            storage.setItem('all_projs', JSON.stringify(allProj));
+            manipulator.homePage();
+        })
+
 
     }
 
     function displayTask(parentId, myId) {
-        console.log(parentId, myId);
         newTask(undefined, parentId, myId);
     }
 
@@ -100,7 +140,7 @@ export const taskMan = (function () {
 
         for (const key of Object.keys(allProj)) {
             const option = document.createElement('option');
-            option.value = allProj[key].name;
+            option.value = key;
             option.textContent = allProj[key].name;
             projectSelect.appendChild(option);
             if (currentProject == allProj[key].name) {

@@ -1,4 +1,5 @@
 import plusButton from "./icons/plus.svg";
+import saveButtonSVG from "./icons/save.svg";
 import { taskMan } from "./task-dom";
 import { Proj } from "./projects";
 
@@ -38,14 +39,50 @@ export const manipulator = (function () {
     }
 
     function newProjectAdder() {
-        const allProj = JSON.parse(storage.all_projs);
         const addNewProject = document.querySelector('.add-project-button');
-        addNewProject.addEventListener('click', () => {
-            const projectName = prompt("Enter New Project Name");
-            allProj[crypto.randomUUID()] = new Proj(projectName);
+        addNewProject.addEventListener('click', (e) => {
+            addNewProject.remove();
+            createProject();
+        })
+    }
+    
+    function createProject() {
+        const allProj = JSON.parse(storage.all_projs);
+        const projCard = document.querySelector('.new-proj');
+        const addProject = document.createElement('div');
+        projCard.appendChild(addProject);
+        addProject.classList.add('add-project');
+        const form = document.createElement('form');
+        form.classList.add('save-project-submit');
+        const container = document.createElement('div');
+        container.classList.add('project-name-form')
+        const label = document.createElement('label')
+        const input = document.createElement('input');
+        const submitButton = document.createElement('button');
+        const saveButtonImg = document.createElement('img');
+        saveButtonImg.classList.add('save-button-img');
+        saveButtonImg.src = saveButtonSVG;
+        submitButton.appendChild(saveButtonImg);
+        submitButton.type = 'submit';
+        form.action = '#';
+        form.method = 'post';
+        label.htmlFor = 'project-name';
+        input.id = 'project-name';
+        input.name = 'project-name';
+        input.placeholder = 'enter project name'
+        container.appendChild(label);
+        container.appendChild(input);
+        form.appendChild(container);
+        form.appendChild(submitButton);
+        projCard.appendChild(form);
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            allProj[crypto.randomUUID()] = new Proj(input.value);
             storage.setItem('all_projs', JSON.stringify(allProj));
             homePage();
         })
+
     }
 
     function newTaskEventAdder() {
