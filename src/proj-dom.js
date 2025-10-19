@@ -20,6 +20,7 @@ export const manipulator = (function () {
         newProjectAdder();
         projectViewEventAdder();
         checkmarkEventAdder();
+        deleteProjectEventAdder();
     }
 
 
@@ -103,12 +104,12 @@ export const manipulator = (function () {
 
     }
 
-    function removeProjectEventAdder() {
-        const addTaskButton = document.querySelectorAll('.add-button');
-        addTaskButton.forEach((element) => {
+    function deleteProjectEventAdder() {
+        const deleteProjectButton = document.querySelectorAll('.delete-project-button');
+        deleteProjectButton.forEach((element) => {
             element.addEventListener('click', (e) => {
-                const uuid = e.target.parentElement.parentElement.parentElement.parentElement.id;
-                manipulator.deleteProject(uuid);
+                const projectId = element.parentElement.id
+                manipulator.deleteProject(projectId);
             })
         })
     }
@@ -152,10 +153,10 @@ export const manipulator = (function () {
         return projects;
     }
 
-    function deleteProject(uuid) {
+    function deleteProject(projectId) {
         const allProj = JSON.parse(storage.all_projs);
-        const projCard = document.getElementById(uuid);
-        delete allProj[uuid];
+        const projCard = document.getElementById(projectId);
+        delete allProj[projectId];
         projCard.remove();
         storage.clear();
         storage.setItem('all_projs', JSON.stringify(allProj));
@@ -233,8 +234,19 @@ export const manipulator = (function () {
 
         }
 
+        const deleteProjectButton = document.createElement('button');
+        deleteProjectButton.classList.add('delete-project-button');
+        const deleteProjectTitle = document.createElement('p');
+        deleteProjectTitle.textContent = 'delete project';
+        const deleteProjectImg = document.createElement('img');
+        deleteProjectImg.src = deleteButtonSVG;
+        deleteProjectButton.appendChild(deleteProjectTitle);
+        deleteProjectButton.appendChild(deleteProjectImg);
+
+
         projCard.appendChild(projHeader);
         projCard.appendChild(allTasks);
+        projCard.appendChild(deleteProjectButton);
 
         return projCard;
     }
@@ -252,6 +264,8 @@ export const manipulator = (function () {
         taskMan.addBackButton();
         viewTaskEventAdder();
         deleteTaskEventAdder();
+        checkmarkEventAdder(false);
+        deleteProjectEventAdder();
 
     }
 
@@ -284,13 +298,13 @@ export const manipulator = (function () {
         })
     }
 
-    function checkmarkEventAdder() {
+    function checkmarkEventAdder(home=true) {
         const checkButton = document.querySelectorAll('.checkbox-button');
         checkButton.forEach((element) => {
             element.addEventListener('click', (e) => {
                 const myId = element.parentElement.parentElement.id;
                 const parentId = element.parentElement.parentElement.parentElement.parentElement.id;
-                taskMan.changeTaskStatus(myId, parentId);
+                taskMan.changeTaskStatus(myId, parentId, home);
             })
         })
 
@@ -298,5 +312,5 @@ export const manipulator = (function () {
 
 
 
-    return { homePage, deleteProject }
+    return { homePage, deleteProject, viewProject }
 })()

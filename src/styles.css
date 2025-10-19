@@ -1,113 +1,141 @@
 @font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-SemiboldIt.woff2') format('woff2'),
-        url('fonts/SourceSansPro-SemiboldIt.woff') format('woff');
-    font-weight: 600;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-It.woff2') format('woff2'),
-        url('fonts/SourceSansPro-It.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-ExtraLightIt.woff2') format('woff2'),
-        url('fonts/SourceSansPro-ExtraLightIt.woff') format('woff');
-    font-weight: 200;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-Semibold.woff2') format('woff2'),
-        url('fonts/SourceSansPro-Semibold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-LightIt.woff2') format('woff2'),
-        url('fonts/SourceSansPro-LightIt.woff') format('woff');
-    font-weight: 300;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-Regular.woff2') format('woff2'),
-        url('fonts/SourceSansPro-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-Light.woff2') format('woff2'),
-        url('fonts/SourceSansPro-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-ExtraLight.woff2') format('woff2'),
-        url('fonts/SourceSansPro-ExtraLight.woff') format('woff');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-Bold.woff2') format('woff2'),
-        url('fonts/SourceSansPro-Bold.woff') format('woff');
+    font-family: 'BPdotsVertical';
+    src: url('fonts/BPdotsVertical-Bold.woff2') format('woff2'),
+        url('fonts/BPdotsVertical-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-Black.woff2') format('woff2'),
-        url('fonts/SourceSansPro-Black.woff') format('woff');
-    font-weight: 900;
+    font-family: 'BPdotsSquares';
+    src: url('fonts/BPdotsSquares.woff2') format('woff2'),
+        url('fonts/BPdotsSquares.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-BlackIt.woff2') format('woff2'),
-        url('fonts/SourceSansPro-BlackIt.woff') format('woff');
-    font-weight: 900;
-    font-style: italic;
+    font-family: 'BPdotsSquares';
+    src: url('fonts/BPdotsSquares-Light.woff2') format('woff2'),
+        url('fonts/BPdotsSquares-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Source Sans Pro';
-    src: url('fonts/SourceSansPro-BoldIt.woff2') format('woff2'),
-        url('fonts/SourceSansPro-BoldIt.woff') format('woff');
+    font-family: 'BPdotsSquares';
+    src: url('fonts/BPdotsSquares-Bold.woff2') format('woff2'),
+        url('fonts/BPdotsSquares-Bold.woff') format('woff');
     font-weight: bold;
-    font-style: italic;
+    font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'BPdotsVertical';
+    src: url('fonts/BPdotsVertical.woff2') format('woff2'),
+        url('fonts/BPdotsVertical.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsPlus';
+    src: url('fonts/BPdotsPlus-Bold.woff2') format('woff2'),
+        url('fonts/BPdotsPlus-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsPlus';
+    src: url('fonts/BPdotsPlus.woff2') format('woff2'),
+        url('fonts/BPdotsPlus.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsDiamond';
+    src: url('fonts/BPdotsDiamond.woff2') format('woff2'),
+        url('fonts/BPdotsDiamond.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsMinus';
+    src: url('fonts/BPdotsMinus.woff2') format('woff2'),
+        url('fonts/BPdotsMinus.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdots';
+    src: url('fonts/BPdots.woff2') format('woff2'),
+        url('fonts/BPdots.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdots';
+    src: url('fonts/BPdots-Light.woff2') format('woff2'),
+        url('fonts/BPdots-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsMinus';
+    src: url('fonts/BPdotsMinus-Bold.woff2') format('woff2'),
+        url('fonts/BPdotsMinus-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsDiamond';
+    src: url('fonts/BPdotsDiamond-Light.woff2') format('woff2'),
+        url('fonts/BPdotsDiamond-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdots';
+    src: url('fonts/BPdots-Bold.woff2') format('woff2'),
+        url('fonts/BPdots-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BPdotsDiamond';
+    src: url('fonts/BPdotsDiamond-Bold.woff2') format('woff2'),
+        url('fonts/BPdotsDiamond-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 * {
-    font-family: 'Source Sans Pro';
+    font-family: 'BPdotsDiamond';
     margin: 0px;
     padding: 0px;
     background: none;
@@ -120,6 +148,14 @@
     padding: 10px 20px 10px 20px;
     align-items: center;
 }
+
+label,
+input,
+select,
+button {
+    font-weight: bold;
+}
+
 
 .header>h1 {
     grid-column: 2;
@@ -135,6 +171,7 @@
     justify-self: start;
 }
 
+.delete-project-button,
 .add-project>.add-project-button,
 .add-task>.add-button {
     display: flex;
@@ -143,16 +180,29 @@
     align-items: center;
 }
 
+.delete-project-button {
+    position: relative;
+    top: 25px;
+    align-self: center;
+    justify-self: center;
+    background-color: white;
+    border: 1px dashed black;
+    padding: 5px 10px 5px 10px;
+    border-radius: 16px;
+}
+
 .container {
     padding: 20px;
 }
 
 .projects {
     display: grid;
-    gap: 25px;
+    row-gap: 55px;
+    column-gap: 25px;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
+.delete-project-button > img,
 .checkbox-button > img,
 .delete-task-button-img,
 .save-button-img,
@@ -197,7 +247,7 @@
 }
 
 .proj-card {
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
     border: dashed black 1px;
     border-radius: 16px;
 }
@@ -206,7 +256,6 @@
     display: grid;
     gap: 10px;
     font-size: 1.2rem;
-    color: grey;
 }
 
 .task {
@@ -216,6 +265,7 @@
 }
 
 .new-proj {
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,8 +340,7 @@ input {
 }
 
 .view-task-isFinished {
-    height: 100%;
-    width: 50%;
+    display: none;
 }
 
 .checkbox:hover,

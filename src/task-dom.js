@@ -3,6 +3,8 @@ import backSVG from "./icons/back.svg";
 import { manipulator } from "./proj-dom";
 import { Task } from "./tasks";
 import saveButtonSVG from "./icons/save.svg";
+import checkSVG from "./icons/check.svg";
+import uncheckSVG from "./icons/uncheck.svg";
 
 export const taskMan = (function () {
     const storage = window.localStorage;
@@ -35,6 +37,14 @@ export const taskMan = (function () {
         isFinished.type = 'checkbox';
         isFinished.checked = false;
         taskContainer.appendChild(isFinished);
+
+        const checkbox = document.createElement('button');
+        checkbox.type = 'button';
+        checkbox.classList.add('checkbox-button');
+        const checkboxImg = document.createElement('img');
+        checkboxImg.src = uncheckSVG;
+        checkbox.appendChild(checkboxImg);
+        taskContainer.appendChild(checkbox);
 
         const taskName = document.createElement('input');
         taskName.placeholder = "title"
@@ -71,6 +81,7 @@ export const taskMan = (function () {
 
         if (parentId) {
             const task = allProj[parentId].tasks[myId];
+            checkboxImg.src = task.isFinished ? checkSVG : uncheckSVG;
             isFinished.checked = task.isFinished;
             taskName.value = task.title;
             desc.value = task.desc;
@@ -78,6 +89,11 @@ export const taskMan = (function () {
             notes.value = task.notes;
             dueDate.value = task.dueDate;
         }
+
+        checkbox.addEventListener('click', () => {
+            isFinished.checked = !isFinished.checked;
+            checkboxImg.src = isFinished.checked ? checkSVG : uncheckSVG;
+        })
 
         mainContainer.appendChild(form);
         addBackButton();
@@ -194,12 +210,12 @@ export const taskMan = (function () {
         })
     }
 
-    function changeTaskStatus(myId, parentId) {
-        console.log(myId, parentId);
+    function changeTaskStatus(myId, parentId, home = true) {
         const allProj = JSON.parse(storage.all_projs);
         allProj[parentId].tasks[myId].isFinished = !allProj[parentId].tasks[myId].isFinished;
         storage.setItem('all_projs', JSON.stringify(allProj));
-        manipulator.homePage();
+        if (home) manipulator.homePage();
+        else manipulator.viewProject(parentId);
     }
 
     return { displayTask, newTask, addBackButton, changeTaskStatus}
