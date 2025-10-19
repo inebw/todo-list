@@ -181,8 +181,8 @@ button {
 }
 
 .delete-project-button {
-    position: relative;
-    top: 25px;
+    position: absolute;
+    bottom: -25px;
     align-self: center;
     justify-self: center;
     background-color: white;
@@ -247,7 +247,8 @@ button {
 }
 
 .proj-card {
-    padding: 20px 20px 5px 20px;
+    position: relative;
+    padding: 25px;
     border: dashed black 1px;
     border-radius: 16px;
 }
