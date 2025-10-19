@@ -194,5 +194,13 @@ export const taskMan = (function () {
         })
     }
 
-    return { displayTask, newTask, addBackButton}
+    function changeTaskStatus(myId, parentId) {
+        console.log(myId, parentId);
+        const allProj = JSON.parse(storage.all_projs);
+        allProj[parentId].tasks[myId].isFinished = !allProj[parentId].tasks[myId].isFinished;
+        storage.setItem('all_projs', JSON.stringify(allProj));
+        manipulator.homePage();
+    }
+
+    return { displayTask, newTask, addBackButton, changeTaskStatus}
 })();

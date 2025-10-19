@@ -1,5 +1,5 @@
 export const Task = class {
-    constructor(title, desc="", dueDate, priority="low", notes="", isFinished=false) {
+    constructor(title, desc="", dueDate, priority="low", notes="", isFinished=true) {
         this.title = title;
         this.desc = desc;
         this.dueDate = dueDate;

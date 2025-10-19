@@ -1,6 +1,8 @@
 import plusButton from "./icons/plus.svg";
 import saveButtonSVG from "./icons/save.svg";
 import deleteButtonSVG from "./icons/delete.svg";
+import checkSVG from "./icons/check.svg";
+import uncheckSVG from "./icons/uncheck.svg";
 import { taskMan } from "./task-dom";
 import { Proj } from "./projects";
 
@@ -17,6 +19,7 @@ export const manipulator = (function () {
         newTaskEventAdder();
         newProjectAdder();
         projectViewEventAdder();
+        checkmarkEventAdder();
     }
 
 
@@ -196,8 +199,16 @@ export const manipulator = (function () {
             task.classList.add('task');
             task.id = key;
 
-            const checkbox = document.createElement('div');
-            checkbox.classList.add('checkbox');
+            const checkboxContainer = document.createElement('div');
+            const checkbox = document.createElement('button');
+            checkboxContainer.appendChild(checkbox);
+            checkbox.classList.add('checkbox-button');
+            const checkboxImg = document.createElement('img');
+            checkboxImg.src = uncheckSVG;
+            checkbox.appendChild(checkboxImg);
+            if (allProj[parentKey].tasks[key].isFinished) {
+                checkboxImg.src = checkSVG;
+            }
 
             const taskTitle = document.createElement('div');
             taskTitle.textContent = allProj[parentKey].tasks[key].title;
@@ -205,7 +216,7 @@ export const manipulator = (function () {
 
             allTasks.appendChild(task);
 
-            task.appendChild(checkbox);
+            task.appendChild(checkboxContainer);
             task.appendChild(taskTitle);
 
             if (isSingle) {
@@ -248,10 +259,10 @@ export const manipulator = (function () {
         const deleteButton = document.querySelectorAll('.delete-task-button');
         deleteButton.forEach((element) => {
             element.addEventListener('click', (e) => {
-                const myId = e.target.parentElement.parentElement.id;
-                const parentId = e.target.parentElement.parentElement.parentElement.parentElement.id;
+                const myId = element.parentElement.id;
+                const parentId = element.parentElement.parentElement.parentElement.id
                 deleteTask(myId, parentId);
-                e.target.parentElement.parentElement.remove();
+                element.parentElement.remove();
             })
         })
 
@@ -272,6 +283,20 @@ export const manipulator = (function () {
             } )
         })
     }
+
+    function checkmarkEventAdder() {
+        const checkButton = document.querySelectorAll('.checkbox-button');
+        checkButton.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                const myId = element.parentElement.parentElement.id;
+                const parentId = element.parentElement.parentElement.parentElement.parentElement.id;
+                taskMan.changeTaskStatus(myId, parentId);
+            })
+        })
+
+    }
+
+
 
     return { homePage, deleteProject }
 })()

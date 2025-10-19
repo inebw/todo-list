@@ -153,6 +153,7 @@
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
+.checkbox-button > img,
 .delete-task-button-img,
 .save-button-img,
 .header > button > img,
@@ -212,20 +213,6 @@
     display: flex;
     gap: 5px;
     align-items: center;
-}
-
-.checkbox {
-    background-image: url('icons/uncheck.svg');
-    background-repeat: no-repeat;
-    height: 1.3rem;
-    width: 1.3rem;
-}
-
-.checkbox:hover {
-    background-image: url('icons/check.svg');
-    background-repeat: no-repeat;
-    height: 1.3rem;
-    width: 1.3rem;
 }
 
 .new-proj {
@@ -307,8 +294,9 @@ input {
     width: 50%;
 }
 
+.checkbox:hover,
 .proj-name:hover,
-.task:hover,
+.task-title:hover,
 button:hover {
     cursor: pointer;
     border-radius: 8px;
