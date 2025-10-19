@@ -1,10 +1,11 @@
 import { Task } from "./tasks";
 
 export const Proj = class {
-    constructor(name) {
+    constructor(name, isDefault=false) {
         this.name = name;
         this.tasks = {};
         this.date = new Date();
+        this.isDefault = isDefault;
     }
 
     add_task(new_task) {

@@ -246,7 +246,7 @@ export const manipulator = (function () {
 
         projCard.appendChild(projHeader);
         projCard.appendChild(allTasks);
-        projCard.appendChild(deleteProjectButton);
+        if (!allProj[parentKey].isDefault) projCard.appendChild(deleteProjectButton);
 
         return projCard;
     }
